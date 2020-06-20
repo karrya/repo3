@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <title>Stellar Admin</title>
+
+    <!--线条布局-->
+    <link rel="stylesheet" href="exam/user/css/simple-line-icons.css">
+
+    <!-- 国企小图标-->
+    <link rel="stylesheet" href="exam/user/css/flag-icon.min.css">
+
+    <!--全局布局-->
+    <link rel="stylesheet" href="exam/user/css/style.css">
+
+    <link rel="stylesheet" href="exam/user/css/my_user.css">
+
+    <script src="exam/user/js/jquery-1.12.4.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+</head>
+
+<body>
+
+
+
+
+<!--登录框模态框-->
+<div class="modal fade" id="user_model_login" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" style="color:red;font-weight:bold;font-size: 26px;"> 登 录 窗 口</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"
+                                                                                                  style="color:red;font-weight:bold;font-size: 18px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="login_form" class="form-horizontal">
+                    <div class="form-group ">
+                        <label class="control-label" style="color:purple;font-weight:bold;font-size: 16px;">手 机 号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="userPhone">
+                        <span id="login_phone" class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" style="color:purple;font-weight:bold;font-size: 16px;">密 码 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="password" class="form-control" id="userPassword">
+                        <span id="login_psw" class="help-block"></span>
+                    </div>
+                    <div class="social-or-login text-center">
+                        <span class="bigger-110">----------------Or Login Using-------------</span>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <a href=""  class="forgot-password-link">
+                                <i class="icon-arrow-left text-left">QQ 登 录</i>
+                            </a>
+                            <a id="forget_key"  class="forgot-password-link" style="float: right;">
+                                忘 记 密 码<i  class="icon-arrow-right text-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-inverse-info btn-rounded" data-dismiss="modal"
+                        style="font-size: 14px;">退 出
+                </button>
+                <button type="reset" class="btn btn-inverse-danger btn-rounded" id="btn_register"
+                        style="font-size: 14px">注 册
+                </button>
+                <button type="button" class="btn btn-inverse-success btn-rounded" id="btn_login"
+                        style="font-size: 14px">登 录
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--登录框模态框-->
+
+<!--注册框模态框-->
+<div class="modal fade" id="user_model_register" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content col-md-18">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color:red;font-weight:bold;font-size: 20px;"> 注 册 窗 口</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"
+                                                                                                  style="color:red;font-weight:bold;font-size: 18px;">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="register_form" class="form-horizontal">
+                    <div class="form-group ">
+                        <label class="control-label col-md-3" style="color:purple;font-weight:bold;font-size: 16px;">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名 </label>
+                        <input id="register_name" type="text" >
+                        <span id="span_register_name" class="help-block"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3" style="color:purple;font-weight:bold;font-size: 16px;">手&nbsp;&nbsp;机&nbsp;&nbsp;&nbsp;号 </label>
+                        <input id="register_phone" type="text" >
+                        <span id="span_register_phone"  class="help-block"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3" style="color:purple;font-weight:bold;font-size: 16px;">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码 </label>
+                        <input  id="register_pw1" type="password" >
+                        <span id="span_register_pw1" class="help-block"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3" style="color:purple;font-weight:bold;font-size: 16px;">却 认 密 码</label>
+                        <input  id="register_pw2" type="password">
+                        <span id="span_register_pw2" class="help-block"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3" style="color:purple;font-weight:bold;font-size: 16px;">密 保 问 题</label>
+                        <input id="register_lock"  type="text" >
+                        <span id="span_register_lock" class="help-block"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3" style="color:purple;font-weight:bold;font-size: 16px;">密 保 答 案 </label>
+                        <input  id="register_key" type="text">
+                        <span id="span_register_key" class="help-block"></span>
+                    </div>
+                    <div class="social-or-login text-center">
+                        <span class="bigger-110">----------------Or Login Using-------------</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-inverse-success btn-rounded" style="font-size: 14px"
+                        id="btn_return_login">登 录
+                </button>
+                <button type="button" id="register_btn" class="btn btn-inverse-danger btn-rounded" style="font-size: 14px">注 册</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--注册框模态框-->
+
+<!--找回密码模态框1-->
+<div class="modal fade" id="user_model_find_key1" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" style="color:red;font-weight:bold;font-size: 26px;">找 回 密 码</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color:red;font-weight:bold;font-size: 18px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="find_key_form1" class="form-horizontal">
+                    <div class="form-group ">
+                        <label class="control-label" style="color:purple;font-weight:bold;font-size: 16px;">输 入 您 要 找 回 密 码 的 手 机 号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="find_phone">
+                        <span id="find_key_phone" class="help-block"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-inverse-success btn-rounded" id="btn_find_login"
+                        style="font-size: 14px">返 回 登 录
+                </button>
+                <button type="reset" class="btn btn-inverse-danger btn-rounded" id="btn_find_key_ok"
+                        style="font-size: 14px">确 定
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--找回密码模态框1-->
+
+<!--找回密码模态框2-->
+<div class="modal fade" id="user_model_find_key2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" style="color:red;font-weight:bold;font-size: 26px;">找 回 密 码</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color:red;font-weight:bold;font-size: 18px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="find_key_form2" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label" style="color:purple;font-weight:bold;font-size: 16px;"> 密 保 问 题&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" readonly="readonly" class="form-control" id="user_lock">
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label" style="color:purple;font-weight:bold;font-size: 16px;"> 密 保 答 案 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="find_ansowerPassword">
+                        <span id="find_ansower_password" class="help-block"></span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label" style="color:purple;font-weight:bold;font-size: 16px;"> 密 码 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="find_password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-inverse-success btn-rounded " id="btn_find_login2"
+                        style="font-size: 14px">返 回 登 录
+                </button>
+                <button type="reset" class="btn btn-inverse-danger btn-rounded" id="btn_find_key"
+                        style="font-size: 14px">找 回 密 码
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--找回密码模态框2-->
+
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex align-items-center">
+            <a class="navbar-brand brand-logo" href="index.html">
+                <!--<img src="images/dashboard/alipay.png" alt="logo" class="logo-dark" />-->
+                <img src="images/logo.svg" alt="logo" class="logo-dark"/>
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
+            <button type="button" class="btn btn-outline-danger btn-icon-text" data-toggle="popover"
+                    data-placement="right" title="四六级英语模拟考试网站" data-content="四六级英语模拟考试网站，为您打造新的模拟测试平台！！">
+                <i class="icon-cloud-upload btn-icon-prepend"></i> 欢迎来到 一流 四六级英语模拟考试网站!
+            </button>
+
+            <ul class="navbar-nav navbar-nav-right ml-auto">
+                <form class="search-form d-none d-md-block" action="#">
+                    <i class="icon-magnifier"></i>
+                    <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                </form>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"><i class="icon-basket-loaded"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"><i class="icon-chart"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator message-dropdown" id="messageDropdown" href="#"
+                       data-toggle="dropdown" aria-expanded="false">
+                        <i class="icon-speech"></i>
+                        <span class="count">7</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
+                         aria-labelledby="messageDropdown">
+                        <a class="dropdown-item py-3">
+                            <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
+                            <span class="badge badge-pill badge-primary float-right">View all</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="images/faces/face10.jpg" alt="image" class="img-sm profile-pic"></div>
+                            <div class="preview-item-content flex-grow py-2">
+                                <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
+                                <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="images/faces/face12.jpg" alt="image" class="img-sm profile-pic"></div>
+                            <div class="preview-item-content flex-grow py-2">
+                                <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
+                                <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic"></div>
+                            <div class="preview-item-content flex-grow py-2">
+                                <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
+                                <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
+
+                    <!--hidden="hidden"-->
+
+                    <button id="login" class="btn btn-info">登 录
+                    </button>
+
+                    <!--对于属性data-toggle="dropdown"的增加可以看见下拉框-->
+                    <a hidden="hidden" class="nav-link dropdown-toggle" id="UserDropdown" href="#"
+                       data-toggle="dropdown" aria-expanded="false">
+                        <img class="img-xs rounded-circle ml-2" src="images/faces/face8.jpg"/>
+                        <span id="name_span" class="font-weight-normal">  </span>
+                    </a>
+                    <!--<img class="img-xs rounded-circle ml-2" src="images/faces/face8.jpg" alt="Profile image">
+                    <span class="font-weight-normal"> Henry Klein </span></a>-->
+
+                    <!--个人信息下来模态框-->
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                        <div class="dropdown-header text-center">
+                            <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                            <p class="mb-1 mt-3">Allen Moreno</p>
+                            <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                        </div>
+                        <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile
+                            <span class="badge badge-pill badge-danger">1</span></a>
+                        <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i>
+                            Messages</a>
+                        <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i>
+                            Activity</a>
+                        <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
+                        <a class="dropdown-item" id="btn_exit"><i
+                                class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
+                    </div>
+                </li>
+
+
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item nav-profile">
+                    <a href="#" class="nav-link">
+                        <div class="profile-image">
+                            <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="profile image">
+                            <div class="dot-indicator bg-success"></div>
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name">Allen Moreno</p>
+                            <p class="designation">Administrator</p>
+                        </div>
+                        <div class="icon-container">
+                            <i class="icon-bubbles"></i>
+                            <div class="dot-indicator bg-danger"></div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item nav-category">
+                    <span class="nav-link">我 的 题 库</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <span class="menu-title">开始做题</span>
+                        <i class="icon-screen-desktop menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <span class="menu-title">开始做题</span>
+                        <i class="icon-screen-desktop menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item nav-category"><span class="nav-link">个 人 管 理</span></li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                       aria-controls="ui-basic">
+                        <span class="menu-title">Basic UI Elements</span>
+                        <i class="icon-layers menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/icons/simple-line-icons.html">
+                        <span class="menu-title">我的订单</span>
+                        <i class="icon-globe menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/forms/basic_elements.html">
+                        <span class="menu-title">我的钱包</span>
+                        <i class="icon-book-open menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/charts/chartist.html">
+                        <span class="menu-title">我的积分</span>
+                        <i class="icon-chart menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/tables/basic-table.html">
+                        <span class="menu-title">账号安全</span>
+                        <i class="icon-grid menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item nav-category"><span class="nav-link">其 他</span></li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                        <span class="menu-title">其他</span>
+                        <i class="icon-doc menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="auth">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/samples/login.html"> 学习资料 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/samples/register.html"> 文章欣赏 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/samples/error-404.html"> 社区 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/samples/error-500.html"> 消息中心 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/samples/blank-page.html"> 网站中心 </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item pro-upgrade">
+							<span class="nav-link">
+                <a class="btn btn-block px-0 btn-rounded btn-upgrade" href="#" target="_blank"> <i
+                        class="icon-badge mx-2"></i> Upgrade to Pro</a>
+              </span>
+                </li>
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row purchace-popup">
+                    <div class="col-12 stretch-card grid-margin">
+                        <div class="card card-secondary">
+									<span class="card-body d-lg-flex align-items-center">
+                 
+                   		我是顶部导航
+                  </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <li class="nav-item dropdown language-dropdown d-none d-sm-flex align-items-center">
+                                    <a id="LanguageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                        <button type="button" class="btn btn-danger btn-icon-text">
+                                            <i class="icon-cloud-upload btn-icon-prepend"></i> 四级 / 六级
+                                        </button>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-left navbar-dropdown py-2"
+                                         aria-labelledby="LanguageDropdown">
+                                        <a class="dropdown-item">
+                                            <i class="icon-pencil mr-4"></i> 四级
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <i class=" icon-note mr-4"></i> 六级
+                                        </a>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-items-center mb-4">
+                                    <h4 class="card-title mb-sm-0">Products Inventory</h4>
+                                    <a href="#" class="text-dark ml-auto mb-3 mb-sm-0"> View all Products</a>
+                                </div>
+                                <div class="table-responsive border rounded p-1">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th class="font-weight-bold">Store ID</th>
+                                            <th class="font-weight-bold">Amount</th>
+                                            <th class="font-weight-bold">Gateway</th>
+                                            <th class="font-weight-bold">Created at</th>
+                                            <th class="font-weight-bold">Paid at</th>
+                                            <th class="font-weight-bold">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="img-sm rounded-circle" src="images/faces/face1.jpg"
+                                                     alt="profile image"> Katie Holmes
+                                            </td>
+                                            <td>$3621</td>
+                                            <td><img src="images/dashboard/alipay.png" alt="alipay"
+                                                     class="gateway-icon mr-2"> alipay
+                                            </td>
+                                            <td>04 Jun 2019</td>
+                                            <td>18 Jul 2019</td>
+                                            <td>
+                                                <div class="badge badge-success p-2">Paid</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="img-sm rounded-circle" src="images/faces/face2.jpg"
+                                                     alt="profile image"> Minnie Copeland
+                                            </td>
+                                            <td>$6245</td>
+                                            <td><img src="images/dashboard/paypal.png" alt="alipay"
+                                                     class="gateway-icon mr-2"> Paypal
+                                            </td>
+                                            <td>25 Sep 2019</td>
+                                            <td>07 Oct 2019</td>
+                                            <td>
+                                                <div class="badge badge-danger p-2">Pending</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="img-sm rounded-circle" src="images/faces/face3.jpg"
+                                                     alt="profile image"> Rodney Sims
+                                            </td>
+                                            <td>$9265</td>
+                                            <td><img src="images/dashboard/alipay.png" alt="alipay"
+                                                     class="gateway-icon mr-2"> alipay
+                                            </td>
+                                            <td>12 dec 2019</td>
+                                            <td>26 Aug 2019</td>
+                                            <td>
+                                                <div class="badge badge-warning p-2">Failed</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="img-sm rounded-circle" src="images/faces/face4.jpg"
+                                                     alt="profile image"> Carolyn Barker
+                                            </td>
+                                            <td>$2263</td>
+                                            <td><img src="images/dashboard/alipay.png" alt="alipay"
+                                                     class="gateway-icon mr-2"> alipay
+                                            </td>
+                                            <td>30 Sep 2019</td>
+                                            <td>20 Oct 2019</td>
+                                            <td>
+                                                <div class="badge badge-success p-2">Paid</div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex mt-4 flex-wrap">
+                                    <p class="text-muted">Showing 1 to 10 of 57 entries</p>
+                                    <nav class="ml-auto">
+                                        <ul class="pagination separated pagination-info">
+                                            <li class="page-item">
+                                                <a href="#" class="page-link"><i class="icon-arrow-left"></i></a>
+                                            </li>
+                                            <li class="page-item active">
+                                                <a href="#" class="page-link">1</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a href="#" class="page-link">2</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a href="#" class="page-link">3</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a href="#" class="page-link">4</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a href="#" class="page-link"><i class="icon-arrow-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017  All rights reserved.More Templates <a
+                                    href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
+                                    href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></span>
+                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+                                    class="icon-heart text-danger"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+
+
+</body>
+<!--最基础的js-->
+<script src="exam/user/js/vendor.bundle.base.js"></script>
+<!--登录模态框处理-->
+<script src="js/user/login_model.js"></script>
+
+<!--登录事件处理-->
+<script src="js/user/login.js"></script>
+</html>

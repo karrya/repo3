@@ -1,0 +1,8 @@
+.likai_success{
+    color: green;
+    font-weight: bolder;
+}
+.likai_fail{
+    color: red;
+    font-weight: bolder;
+}

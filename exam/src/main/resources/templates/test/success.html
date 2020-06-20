@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--<title th:text="${title}"></title>-->
+</head>
+<body>
+<hr>
+<div th:id="${hello}" th:class="${hello}" th:text="${hello}">这里是欢迎显示界面</div>
+<div th:text="${hello}">这里是欢迎显示界面</div>
+<div th:utext="${hello}">这里是欢迎显示界面</div>
+
+<hr/>
+<table>
+    <thead>
+    <tr>
+        <th>姓名</th>
+    </tr>
+    </thead>
+    <tbody th:each="user : ${users}">
+    <tr>
+        <th th:text="${user}"></th>
+    </tr>
+    </tbody>
+</table>
+<hr/>
+
+
+</body>
+</html>

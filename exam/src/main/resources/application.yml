@@ -1,0 +1,17 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# 数据源配置
+spring:
+  profiles:
+    active: dev      #使用的配置文件时开发环境的
+  jmx:
+    default-domain: CodeDomain
+
+
+
+
+

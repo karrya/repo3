@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lk.exam.dao.UserMapper">
+
+    <!--<resultMap id="BaseResultMap" type="com.lk.exam.bean.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="userid" jdbcType="VARCHAR" property="userid"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+    </resultMap>-->
+
+    <sql id="Base_Column_List">
+        user_id,open_id,user_name,user_phone,user_password,is_off,role_id,create_time,user_lock,user_key
+    </sql>
+
+   <!-- 查询所有用户-->
+    <select id="select_users" resultType="com.lk.exam.bean.User">
+        select
+        <include refid="Base_Column_List"/>
+         from tb_user
+    </select>
+
+    <!--登录-->
+    <select id="select_login" resultType="com.lk.exam.bean.User">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where user_phone = #{userPhone,jdbcType=VARCHAR}
+        and user_password = #{userPassword,jdbcType=VARCHAR}
+        and role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+
+    <!--注册时查询电话号码是否已经注册-->
+    <select id="select_only_user" resultType="com.lk.exam.bean.User">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where  user_phone = #{userPhone,jdbcType=VARCHAR}
+    </select>
+
+    <!--注册-->
+    <!--useGeneratedKeys="true" 获取自增主键-->
+    <insert id="insert_login" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId">
+        insert into
+            tb_user(user_name,user_phone,user_password,create_time,user_lock,user_key)
+        VALUES
+            (#{userName},#{userPhone},#{userPassWord},#{createTime},#{userLock},#{userKey})
+    </insert>
+
+</mapper>
